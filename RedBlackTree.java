@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-
 
 public class RedBlackTree {
 
 	private TreeNode root;
 	private TreeNode TNULL;
-	private List<Integer> inOrderTraversal;
-	public boolean flag = true;
+	public List<Integer> inOrderTraversal;
 
     // constructor to initialize the Red Black Tree values
 	public RedBlackTree() {
@@ -19,7 +18,13 @@ public class RedBlackTree {
 		inOrderTraversal = new ArrayList<>();
 		root = TNULL;
 	}
-
+	public void inOrderTraversalofTree(TreeNode root, HashMap<Integer, Integer> colorTree){
+		if(root==null)return;
+		inOrderTraversalofTree(root.left, colorTree);
+		colorTree.put(root.bookId, root.color);
+		inOrderTraversalofTree(root.right, colorTree);
+		return;
+	}
     // inserts ride into the red black tree
 	public TreeNode insert(int bookId, String bookName, String authorName, String availability) {
 		TreeNode node = new TreeNode(bookId, bookName, authorName, availability);
@@ -202,7 +207,7 @@ public class RedBlackTree {
 					s = x.parent.left;
 				}
 
-				if (s.right.color == 0 && s.right.color == 0) {
+				if (s.left.color == 0 && s.right.color == 0) {
 					s.color = 1;
 					x = x.parent;
 				} else {
