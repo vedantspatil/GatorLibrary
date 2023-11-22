@@ -1,7 +1,7 @@
 //Data Structure to store the ride details in a Red Black Tree
 
 import java.util.Comparator;
-import java.util.PriorityQueue;
+// import java.util.PriorityQueue;
 
 public class TreeNode{
     public int bookId;
@@ -9,7 +9,7 @@ public class TreeNode{
     public String authorName;
     public String availability; 
     public String borrowedBy;
-    public PriorityQueue<UserNode> reservationHeap;
+    public PriorityQueue reservationHeap;
 
     public TreeNode right;
     public TreeNode left;
@@ -27,17 +27,18 @@ public class TreeNode{
         this.authorName = authorName;
         this.availability = availability;
         this.borrowedBy = "None";
+        this.reservationHeap = new PriorityQueue(2000);
+        // reservationHeap = new PriorityQueue<UserNode>(new Comparator<UserNode>() {
+        //     @Override
+        //     public int compare(UserNode u1, UserNode u2) {
+        //         if(u1.priority == u2.priority)
+        //             return u1.timestamp.compareTo(u2.timestamp);
+        //         else {
+        //             return u1.priority-u2.priority;
+        //         }
+        //     }
+        // });
 
-        reservationHeap = new PriorityQueue<UserNode>(new Comparator<UserNode>() {
-            @Override
-            public int compare(UserNode u1, UserNode u2) {
-                if(u1.priority == u2.priority)
-                    return u1.timestamp.compareTo(u2.timestamp);
-                else {
-                    return u1.priority-u2.priority;
-                }
-            }
-        });
         this.color = 1;
 
     }

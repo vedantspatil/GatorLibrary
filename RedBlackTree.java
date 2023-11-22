@@ -25,7 +25,7 @@ public class RedBlackTree {
 		inOrderTraversalofTree(root.right, colorTree);
 		return;
 	}
-    // inserts ride into the red black tree
+    // inserts book into the red black tree
 	public TreeNode insert(int bookId, String bookName, String authorName, String availability) {
 		TreeNode node = new TreeNode(bookId, bookName, authorName, availability);
 		node.parent = null;
@@ -117,7 +117,7 @@ public class RedBlackTree {
 	public void findNode(TreeNode curr, int bookId){
 		if (curr == null)
 			return;
-		// prints the rides found in the given ride number range
+		// prints the books found in the given book Id range
 		if (bookId == curr.bookId ) {
             printNode(curr);
 		}
@@ -128,38 +128,39 @@ public class RedBlackTree {
 		// recurse the right subtree
 		else findNode(curr.right, bookId);
 	}
+	
 	private void findNodesInRangeHelper(TreeNode curr, int bookId1, int bookId2, ArrayList<TreeNode> listOfNodes){
 		if (curr == null)
 			return;
-		// first we recurse the left subtree if it has values greater than rideNumber1
+		// first we recurse the left subtree if it has values greater than bookId1
 		if (curr.bookId > bookId1) {
 			findNodesInRangeHelper(curr.left, bookId1, bookId2,listOfNodes);
 		}
-		// prints the rides found in the given ride number range
+		// prints the books found in the given book Id range
 		if (bookId1 <= curr.bookId && bookId2 >= curr.bookId) {
 			listOfNodes.add(curr);
 		}
 		// recurse the right subtree
 		findNodesInRangeHelper(curr.right, bookId1, bookId2,listOfNodes);
 	}
-	// finds the books in range of the given book numbers
+	// finds the books in range of the given book Ids
 	public ArrayList<TreeNode> findNodesInRange(TreeNode curr, int bookId1, int bookId2){
 		ArrayList<TreeNode> listOfNodes = new ArrayList<>();
 		findNodesInRangeHelper(curr, bookId1, bookId2, listOfNodes);
 		return listOfNodes;
 	}
 	
-	// Search the tree for a given rideNumber
+	// Search the tree for a given bookId
 	private TreeNode searchHelper(TreeNode node, int bookId) {
 		// return null if the search reached a null node
 		if (node == TNULL)
 			return null;
 
-		// return the current node if it has the same ride number
+		// return the current node if it has the same book Id
 		if (bookId == node.bookId) {
 			return node;
 		}
-		// recursively search the left subtree if the curr node ride number is greater
+		// recursively search the left subtree if the curr node book Id is greater
 		// than the passed value
 		if (bookId < node.bookId) {
 			return searchHelper(node.left, bookId);
@@ -168,7 +169,7 @@ public class RedBlackTree {
 		return searchHelper(node.right, bookId);
 	}
 
-	// Balance the RBT after deletion of a ride, using left and right rotations
+	// Balance the RBT after deletion of a book, using left and right rotations
 	private void deleteFixup(TreeNode x) {
 		TreeNode s;
 		while (x != root && x.color == 0) {
@@ -241,11 +242,11 @@ public class RedBlackTree {
 		node2.parent = node1.parent;
 	}
 
-	// delete the ride with a given rideNumber from the tree
+	// delete the book with a given bookId from the tree
 	private void deleteHelper(TreeNode node, int bookId) {
 		TreeNode z = TNULL;
 		TreeNode x, y;
-		// search the tree for the ride number that has to be deleted
+		// search the tree for the book Id that has to be deleted
 		while (node != TNULL) {
 			if (node.bookId == bookId) {
 				z = node;
@@ -260,7 +261,6 @@ public class RedBlackTree {
 
 		// if search results in null, then node doesn't exist in the tree to delete
 		if (z == TNULL) {
-			System.out.println("Couldn't find key in the tree");
 			return;
 		}
 
@@ -297,23 +297,27 @@ public class RedBlackTree {
 	}
 
 	// return the TreeNode found upon searching or null if no node is found for the
-	// passed ridenumber
+	// passed bookId
 	public TreeNode search(int bookId) {
 		return searchHelper(this.root, bookId);
 	}
-	public void printNode(TreeNode curr){
+	public String printNode(TreeNode curr){
 			// BookID = <Book1 ID>
             // Title = "<Book1 Name>"
             // Author = "<Author1 Name"
             // Availability = "<Yes | No>"
             // BorrowedBy = <Patron Id | None> Reservations = [patron1_id,patron2_id,....]
 			ArrayList<String> heap = new ArrayList<>();
-			for(UserNode node: curr.reservationHeap){
-				heap.add(node.userId);
+			// for(UserNode node: curr.reservationHeap){
+			// 	heap.add(node.userId);
+			// }
+			for(int i=0; i<curr.reservationHeap.size(); i++){
+				
+				heap.add(curr.reservationHeap.get(i).userId);
 			}
 			String output = "BookID = " + curr.bookId + "\n" + "Title = " + curr.bookName+ "\n"+ "Author = "+ curr.authorName
-                            + "\n"+ "Availability = " + curr.availability + "\n" + "BorrowedBy = "+curr.borrowedBy+"\n"+"Reservations = "+ heap.toString()+"\n";
-            System.out.println(output);
+                            + "\n"+ "Availability = " + curr.availability + "\n" + "BorrowedBy = "+curr.borrowedBy+"\n"+"Reservations = "+ heap.toString()+"\n\n";
+            return output;
 	}
 	// return the minimum node linked to a given node
 	public TreeNode minimum(TreeNode node) {
@@ -368,7 +372,6 @@ public class RedBlackTree {
 
 	// prints the books closest to book with bookId
 	public ArrayList<Integer> printClosest(int bookId){
-		// System.out.println(inOrderTraversal.toString());
 		int minBook = Integer.MAX_VALUE;
 		ArrayList<Integer> minindices = new ArrayList<>();
 		for(int val: inOrderTraversal){
