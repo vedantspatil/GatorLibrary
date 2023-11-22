@@ -196,7 +196,7 @@ public class gatorLibrary {
 							displayString+=". Reservation made by patron "+ book.reservationHeap.poll().userId + " have been cancelled!";
 						}
 					}
-					displayString+="\n";
+					displayString+="\n\n";
 					output = displayString;
 					Files.writeString(opFileName, output, StandardOpenOption.APPEND);
 					rbtObj.deleteNode(Integer.parseInt(bookId.trim()));
@@ -223,7 +223,7 @@ public class gatorLibrary {
 					break;
 
 				case "ColorFlipCount":
-					output = "Color flip count: "+ ColorFlipCount+"\n\n";
+					output = "Color Flip Count: "+ ColorFlipCount+"\n\n";
 					Files.writeString(opFileName, output, StandardOpenOption.APPEND);
 					break;
 

@@ -54,11 +54,10 @@ public class PriorityQueue {
 		}
 		Heap[index] = element;
 		int current = index;
-		// compares ride costs and min cost rides are put at top of heap
+		// compares book Priority and min priority is at top of heap
         while (Heap[current].priority < Heap[parent(current)].priority
 				|| (current != parent(current) && Heap[current].priority == Heap[parent(current)].priority)) {
-			// compares trip durations for same cost rides and puts lesser duration rides on
-			// top of heap
+			// compares timestamp for same priority and puts early ones on top
 			if (Heap[current].priority == Heap[parent(current)].priority
 					&& Heap[current].timestamp.compareTo(Heap[parent(current)].timestamp) < 0 ) {
 				swap(current, parent(current));
@@ -92,7 +91,7 @@ public class PriorityQueue {
 		return popped == null ? null : popped;
 	}
 
-	// deletes a ride at a given index from the min heap
+	// deletes a book at a given index from the min heap
 	public UserNode deleteKey(int i) {
 		UserNode delNode = Heap[i];
 		decreaseKey(i, new UserNode("", Integer.MIN_VALUE,new Timestamp(System.currentTimeMillis())));
@@ -100,7 +99,7 @@ public class PriorityQueue {
 		return delNode;
 	}
 
-	// bubbles up the deleted ride to the top of the min heap for remove min
+	// bubbles up the deleted book to the top of the min heap for remove min
 	// operation
 	private void decreaseKey(int i, UserNode new_val) {
 		Heap[i] = new_val;
@@ -117,7 +116,7 @@ public class PriorityQueue {
 	// performs min-heap heapify operation at index i
 	private void minHeapify(int i) {
 
-		// for a non-leaf node with any child having a lesser/equal ride cost
+		// for a non-leaf node with any child having a lesser/equal priority
 		if (!isLeaf(i)) {
 
 			if (Heap[i] != null && (Heap[leftChild(i)] != null && Heap[i].priority >= Heap[leftChild(i)].priority)
@@ -125,7 +124,6 @@ public class PriorityQueue {
 
 				// swapping the minimum of left and right child value with the parent
 				if (Heap[leftChild(i)].priority < Heap[rightChild(i)].priority) {
-					// comparing trip durations of rides having same cost
 					if ((Heap[leftChild(i)].priority == Heap[i].priority)
 							&& (Heap[leftChild(i)].timestamp.compareTo(Heap[i].timestamp))<1) {
 						swap(i, leftChild(i));
@@ -135,7 +133,7 @@ public class PriorityQueue {
 						minHeapify(leftChild(i));
 					}
 				} else {
-					// comparing trip durations of rides having same cost
+					// comparing timestamp of books having same priority
 					if (Heap[rightChild(i)].priority == Heap[leftChild(i)].priority) {
 						if (Heap[rightChild(i)].timestamp.compareTo(Heap[leftChild(i)].timestamp)<1) {
 							swap(i, rightChild(i));

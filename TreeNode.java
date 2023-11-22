@@ -1,4 +1,3 @@
-//Data Structure to store the ride details in a Red Black Tree
 
 import java.util.Comparator;
 // import java.util.PriorityQueue;
